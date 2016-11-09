@@ -1,6 +1,6 @@
 node ('linux && cura') {
     stage 'Prepare' {
-        if fileExists 'build' {
+        if(fileExists('build')) {
             dir 'build' {
                 deleteDir()
             }
@@ -12,7 +12,7 @@ node ('linux && cura') {
     }
 
     stage 'Build' {
-        dir 'build {
+        dir 'build' {
             sh 'cmake ..'
             sh 'make'
         }
