@@ -1,5 +1,5 @@
 node ('linux && cura') {
-    stage 'Prepare' {
+    stage('Prepare') {
         if(fileExists('build')) {
             dir 'build' {
                 deleteDir()
@@ -11,19 +11,19 @@ node ('linux && cura') {
         sh 'mkdir -p build'
     }
 
-    stage 'Build' {
+    stage('Build') {
         dir 'build' {
             sh 'cmake ..'
             sh 'make'
         }
     }
 
-    stage 'Package' {
+    stage('Package') {
     }
 
-    stage 'Run Integration Tests' {
+    stage('Run Integration Tests') {
     }
 
-    stage 'Archive' {
+    stage('Archive') {
     }
 }
