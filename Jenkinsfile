@@ -1,18 +1,29 @@
-node ('linux') {
-    stage 'Checkout'
+node ('linux && cura') {
+    stage 'Prepare' {
+        if fileExists 'build' {
+            dir 'build' {
+                deleteDir()
+            }
+        }
+
         checkout scm
 
-    stage 'Build'
-        sh 'mkdir build'
-        sh 'cd build'
-        sh 'cmake ..'
-        sh 'make'
+        sh 'mkdir -p build'
+    }
 
-    stage 'Package'
+    stage 'Build' {
+        dir 'build {
+            sh 'cmake ..'
+            sh 'make'
+        }
+    }
 
+    stage 'Package' {
+    }
 
-    stage 'Run Integration Tests'
+    stage 'Run Integration Tests' {
+    }
 
-
-    stage 'Archive'
+    stage 'Archive' {
+    }
 }
