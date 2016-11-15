@@ -6,7 +6,7 @@ node ('linux && cura') {
     }
 
     stage('Build') {
-        sh 'cmake .. -DCMAKE_PREFIX_PATH=/opt/ultimaker/cura-build-environment -DCMAKE_BUILD_TYPE=Release'
+        sh 'cmake . -DCMAKE_PREFIX_PATH=/opt/ultimaker/cura-build-environment -DCMAKE_BUILD_TYPE=Release'
         sh 'make'
     }
 
