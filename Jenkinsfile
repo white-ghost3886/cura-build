@@ -1,21 +1,13 @@
 node ('linux && cura') {
     stage('Prepare') {
-        if(fileExists('build')) {
-            dir('build') {
-                deleteDir()
-            }
-        }
+        step([$class: 'WsCleanup'])
 
         checkout scm
-
-        sh 'mkdir -p build'
     }
 
     stage('Build') {
-        dir('build') {
-            sh 'cmake ..'
-            sh 'make'
-        }
+        sh 'cmake .. -DCMAKE_PREFIX_PATH=/opt/ultimaker/cura-build-environment -DCMAKE_BUILD_TYPE=Release'
+        sh 'make'
     }
 
     stage('Package') {
