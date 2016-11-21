@@ -15,6 +15,8 @@ include(SetProjectDependencies)
 option(BUILD_PACKAGE "Create a package with the build of Cura" ON)
 option(SIGN_PACKAGE "Perform signing of the created package. Implies BUILD_PACKAGE" ON)
 
+option(BUILD_TESTING "Enable building and execution of integration tests" OFF)
+
 if(SIGN_PACKAGE)
     set(BUILD_PACKAGE ON)
 endif()
@@ -78,4 +80,8 @@ if(SIGN_PACKAGE)
     else()
         message(STATUS "Do not know how to sign the executable for the current platform! You will need to perform signing manually.")
     endif()
+endif()
+
+if(BUILD_TESTING)
+    enable_testing()
 endif()
