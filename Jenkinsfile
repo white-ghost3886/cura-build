@@ -15,7 +15,6 @@ node ('linux && cura') {
         }
 
         stage('Package') {
-            di
             sh 'make package'
         }
 
