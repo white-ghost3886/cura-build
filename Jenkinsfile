@@ -1,24 +1,31 @@
+def src_dir = pwd()
+def build_dir = pwd(tmp: true)
+
 node ('linux && cura') {
+
     stage('Prepare') {
         step([$class: 'WsCleanup'])
 
         checkout scm
     }
 
-    stage('Build') {
-        sh 'cmake . -DCMAKE_PREFIX_PATH=/opt/ultimaker/cura-build-environment -DCMAKE_BUILD_TYPE=Release -DSIGN_PACKAGE=OFF -DBUILD_TESTING=ON'
-        sh 'make'
-    }
+    dir(build_dir) {
+        stage('Build') {
+            sh "cmake $src_dir -DCMAKE_PREFIX_PATH=/opt/ultimaker/cura-build-environment -DCMAKE_BUILD_TYPE=Release -DSIGN_PACKAGE=OFF -DBUILD_TESTING=ON"
+            sh 'make'
+        }
 
-    stage('Package') {
-        sh 'make package'
-    }
+        stage('Package') {
+            di
+            sh 'make package'
+        }
 
-    stage('Run Integration Tests') {
-        sh 'make test'
-    }
+        stage('Run Integration Tests') {
+            sh 'make test'
+        }
 
-    stage('Archive') {
-        archiveArtifacts '*.AppImage'
+        stage('Archive') {
+            archiveArtifacts '*.AppImage'
+        }
     }
 }
