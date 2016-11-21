@@ -1,6 +1,6 @@
 node ('linux && cura') {
     def src_dir = pwd()
-    def build_dir = pwd(tmp: true)
+    def build_dir = "build"
 
     stage('Prepare') {
         step([$class: 'WsCleanup'])
