@@ -6,7 +6,7 @@ node ('linux && cura') {
     }
 
     stage('Build') {
-        sh 'cmake . -DCMAKE_PREFIX_PATH=/opt/ultimaker/cura-build-environment -DCMAKE_BUILD_TYPE=Release -DSIGN_PACKAGE=OFF'
+        sh 'cmake . -DCMAKE_PREFIX_PATH=/opt/ultimaker/cura-build-environment -DCMAKE_BUILD_TYPE=Release -DSIGN_PACKAGE=OFF -DBUILD_TESTING=ON'
         sh 'make'
     }
 
@@ -15,8 +15,10 @@ node ('linux && cura') {
     }
 
     stage('Run Integration Tests') {
+        sh 'make integration-test'
     }
 
     stage('Archive') {
+        archiveArtifacts '*.AppImage'
     }
 }
