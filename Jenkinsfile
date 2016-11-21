@@ -15,7 +15,7 @@ node ('linux && cura') {
     }
 
     stage('Run Integration Tests') {
-        sh 'make integration-test'
+        sh 'make test'
     }
 
     stage('Archive') {
