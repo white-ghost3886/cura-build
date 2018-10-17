@@ -2,6 +2,10 @@ find_package(Arcus 1.1 REQUIRED)
 
 if(BUILD_OS_WINDOWS)
     set(extra_cmake_args -DArcus_DIR=${CMAKE_PREFIX_PATH}/lib-mingw/cmake/Arcus)
+elseif(BUILD_OS_OSX)
+    set(extra_cmake_args
+        -DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}
+        -DCMAKE_OSX_SYSROOT=${CMAKE_OSX_SYSROOT})
 endif()
 
 ExternalProject_Add(CuraEngine

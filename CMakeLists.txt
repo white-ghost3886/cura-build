@@ -15,6 +15,12 @@ include(SetProjectDependencies)
 option(BUILD_PACKAGE "Create a package with the build of Cura" ON)
 option(SIGN_PACKAGE "Perform signing of the created package. Implies BUILD_PACKAGE" ON)
 
+option(CURAENGINE_OSX_USE_GCC "Use gcc instead of clang on OSX to compile CuraEngine" OFF)
+if(BUILD_OS_OSX)
+    GetFromEnvironmentOrCache(OSX_GCC_C   "${CMAKE_C_COMPILER}"   STRING "The GCC C compiler on OSX if exists")
+    GetFromEnvironmentOrCache(OSX_GCC_CXX "${CMAKE_CXX_COMPILER}" STRING "The GCC C++ compiler on OSX if exists")
+endif()
+
 if(SIGN_PACKAGE)
     set(BUILD_PACKAGE ON)
 endif()
