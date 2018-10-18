@@ -6,6 +6,11 @@ elseif(BUILD_OS_OSX)
     set(extra_cmake_args
         -DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}
         -DCMAKE_OSX_SYSROOT=${CMAKE_OSX_SYSROOT})
+    if(CURAENGINE_OSX_USE_GCC)
+        set(extra_cmake_args ${extra_cmake_args}
+            -DCMAKE_C_COMPILER=${OSX_GCC_C}
+            -DCMAKE_CXX_COMPILER=${OSX_GCC_CXX})
+    endif()
 endif()
 
 ExternalProject_Add(CuraEngine
