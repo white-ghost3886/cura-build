@@ -1,5 +1,6 @@
 find_package(Arcus 1.1 REQUIRED)
 
+
 if(BUILD_OS_WINDOWS)
     set(extra_cmake_args -DArcus_DIR=${CMAKE_PREFIX_PATH}/lib-mingw/cmake/Arcus)
 elseif(BUILD_OS_OSX)
@@ -10,6 +11,7 @@ elseif(BUILD_OS_OSX)
         set(extra_cmake_args ${extra_cmake_args}
             -DCMAKE_C_COMPILER=${OSX_GCC_C}
             -DCMAKE_CXX_COMPILER=${OSX_GCC_CXX})
+            -DCMAKE_CXX_FLAGS="")
     endif()
 endif()
 
