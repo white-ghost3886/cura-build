@@ -10,8 +10,8 @@ elseif(BUILD_OS_OSX)
     if(CURAENGINE_OSX_USE_GCC)
         set(extra_cmake_args ${extra_cmake_args}
             -DCMAKE_C_COMPILER=${OSX_GCC_C}
-            -DCMAKE_CXX_COMPILER=${OSX_GCC_CXX})
-            -DCMAKE_CXX_FLAGS="")
+            -DCMAKE_CXX_COMPILER=${OSX_GCC_CXX}
+            -DCMAKE_CXX_FLAGS= )
     endif()
 endif()
 
