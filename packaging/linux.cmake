@@ -12,7 +12,7 @@ add_custom_command(
 
 add_custom_command(
     TARGET packaging PRE_BUILD
-    COMMAND LD_LIBRARY_PATH=${CMAKE_PREFIX_PATH}/lib ${PYTHON_EXECUTABLE} setup.py build
+    COMMAND LD_LIBRARY_PATH=${CMAKE_PREFIX_PATH}/lib ${PYTHON_EXECUTABLE} setup.py --verbose build
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     COMMENT "Running cx_Freeze to generate executable..."
 )
