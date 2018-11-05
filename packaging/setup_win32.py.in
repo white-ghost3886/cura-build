@@ -78,6 +78,7 @@ for file_name in trimesh_resources_required_files:
 
 def load_pyqt5_qtquick(finder, module):
     finder.IncludeModule("PyQt5.QtCore")
+    finder.IncludeModule("PyQt5.QtDBus")
     finder.IncludeModule("PyQt5.QtGui")
     finder.IncludeModule("PyQt5.QtQml")
     finder.IncludeModule("PyQt5.QtNetwork")
@@ -112,8 +113,8 @@ def load_shapely(finder, module):
 hooks.load_shapely = load_shapely
 
 search_path = sys.path.copy()
-search_path.insert(1, "@EXTERNALPROJECT_INSTALL_PREFIX@/lib/python3.5/site-packages/")
-search_path.insert(2, "@CMAKE_PREFIX_PATH@/lib/python3.5/site-packages/")
+search_path.insert(1, "@EXTERNALPROJECT_INSTALL_PREFIX@/lib/python3.6/site-packages/")
+search_path.insert(2, "@CMAKE_PREFIX_PATH@/lib/python3.6/site-packages/")
 
 # Dependencies are automatically detected, but it might need
 # fine tuning.
@@ -139,23 +140,28 @@ build_options = {
         "trimesh",
         "trimesh.resources",
         "Savitar",
-        "PyQt5.QtDBus",
+        "PyQt5",
         "comtypes",
         "Charon",
+    ],
+    # cx_freeze doesn't import certain modules, so we have to tell it explicitly.
+    "includes": [
+        "numpy.core._methods",
+        "numpy.lib.format",
     ],
     "include_files": [
         ("@EXTERNALPROJECT_INSTALL_PREFIX@/bin/CuraEngine.exe", ""),
         ("@EXTERNALPROJECT_INSTALL_PREFIX@/lib/cura/plugins", ""),
         ("@EXTERNALPROJECT_INSTALL_PREFIX@/lib/uranium/plugins", ""),
-        ("@EXTERNALPROJECT_INSTALL_PREFIX@/lib/python3.5/site-packages/UM/Qt/qml/UM", "qml/UM"),
+        ("@EXTERNALPROJECT_INSTALL_PREFIX@/lib/python3.6/site-packages/UM/Qt/qml/UM", "qml/UM"),
         ("@EXTERNALPROJECT_INSTALL_PREFIX@/share/cura/resources", "resources"),
         ("@EXTERNALPROJECT_INSTALL_PREFIX@/share/uranium/resources", "resources"),
         # Preinstalled PyQt5 installation
-        (PyQt5.__path__[0] + "/Qt/qml/Qt", "qml/Qt"),
-        (PyQt5.__path__[0] + "/Qt/qml/QtQml", "qml/QtQml"),
-        (PyQt5.__path__[0] + "/Qt/qml/QtQuick", "qml/QtQuick"),
-        (PyQt5.__path__[0] + "/Qt/qml/QtQuick.2", "qml/QtQuick.2"),
-        (PyQt5.__path__[0] + "/Qt/qml/QtGraphicalEffects", "qml/QtGraphicalEffects"),
+        ("@CMAKE_PREFIX_PATH@/lib/site-packages/PyQt5/Qt/qml/Qt", "qml/Qt"),
+        ("@CMAKE_PREFIX_PATH@/lib/site-packages/PyQt5/Qt/qml/QtQml", "qml/QtQml"),
+        ("@CMAKE_PREFIX_PATH@/lib/site-packages/PyQt5/Qt/qml/QtQuick", "qml/QtQuick"),
+        ("@CMAKE_PREFIX_PATH@/lib/site-packages/PyQt5/Qt/qml/QtQuick.2", "qml/QtQuick.2"),
+        ("@CMAKE_PREFIX_PATH@/lib/site-packages/PyQt5/Qt/qml/QtGraphicalEffects", "qml/QtGraphicalEffects"),
     ],
     "zip_includes": zip_includes,
     "excludes": [ ],
