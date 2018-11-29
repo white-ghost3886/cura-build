@@ -28,6 +28,19 @@ add_custom_command(
     COMMENT "copying cura.ico as Cura.ico into package/"
 )
 
+add_custom_command(
+    TARGET build_bundle POST_BUILD
+    # NOTE: Somehow Python 3.6 + cxFreeze 5.1.1 will put DLL files in subdirectories as they are
+    # and this can cause problem loading them because they are not in the application's root
+    # directory, thus not in PATH. To fix this, we can find all DLLs in subdirectories (mainly
+    # in "lib" and "qml") and copy them to the root directory.
+    #
+    # Don't know if the problem is caused by Python 3.6 or cxFreeze 5.1.1 or the combination.
+    COMMAND ${CMAKE_CURRENT_LIST_DIR}/win_copy_dlls.bat
+    COMMENT "Copying DLLs in subdirectories to package/"
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/package
+)
+
 install(DIRECTORY ${CMAKE_BINARY_DIR}/package/
         DESTINATION "."
         USE_SOURCE_PERMISSIONS
